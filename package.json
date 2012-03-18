@@ -1,0 +1,12 @@
+{
+	"name":"metamodule",
+	"version": "0.0.1",
+	"dependencies":{
+		"uglify-js":"1.2.6",
+		"traverse":"0.6.0"
+	},
+	"devDependencies":{
+		"vows": "0.6.2"
+	}
+
+}
