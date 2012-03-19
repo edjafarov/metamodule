@@ -7,6 +7,10 @@
 	},
 	"devDependencies":{
 		"vows": "0.6.2"
-	}
+	},
+	"main":"./src/metamodule.js",
+	"scripts": {
+        "test": "vows ./test/metamodule-test.js --spec;"
+    }
 
 }
