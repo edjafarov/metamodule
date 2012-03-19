@@ -40,7 +40,7 @@ module.exports.getMeta = function(src){
 		}
 						
 			// if one of cases
-			if(piece.comments){
+			if(piece.base){
 				// [exports = function] check index of next token
 				var nextParentIndex = piece.base.parent.keys[piece.base.parent.keys.indexOf(piece.base.key) + 1];
 				// [exports] = *function*
@@ -51,6 +51,8 @@ module.exports.getMeta = function(src){
 						args: fcnNode[2]
 					}
 				}
+				//parse annotations
+				piece.annotations = parseAnnotations(piece.comments);
 			}
 			
 			
@@ -64,3 +66,48 @@ module.exports.getMeta = function(src){
 	return completeMetaInfo;
 };
 
+
+
+var ANNOT_TOKEN_REG = new RegExp("@(\\w+)");
+var ANNOT_VARS_REG = new RegExp("\\((.*)\\)");
+var ANNOTATION_REG = new RegExp("@(.+)\\n", "g");
+
+function parseAnnotations(comment){
+    var annot;
+    for(var i=0; i< comment.length; i++){
+        var checkAnnot = comment[i].value.match(ANNOTATION_REG);
+        if(checkAnnot){
+            checkAnnot.forEach(
+                function(annotationString){
+                    var annotationToken = ANNOT_TOKEN_REG.exec(annotationString)[1];
+                    if(!annot) annot = {};
+                    annot[annotationToken] = {};
+                    if(ANNOT_VARS_REG.test(annotationString)){
+                        var vars = ANNOT_VARS_REG.exec(annotationString)[1];
+                        var varsArray = vars.split(",");
+                        varsArray.forEach(function(pair, i, pairs) {
+                            var res = pair.split("=");
+                            if (res[0] && res[1]) {
+                                annot[annotationToken][trim(res[0])] = trim(res[1]);
+                            }
+                        })
+                    }
+                }
+            );
+        }
+
+    }
+    return annot;
+}
+
+//todo: need to cleanup following code - looks ugly
+function trim(str) {
+    str = str.replace(/^[\s"']+/, '');
+    for (var i = str.length - 1; i >= 0; i--) {
+        if (/[^\s"']/.test(str.charAt(i))) {
+            str = str.substring(0, i + 1);
+            break;
+        }
+    }
+    return str;
+}

@@ -27,6 +27,11 @@ vows.describe('metamodule test').addBatch({
         	assert.isArray(metaInfo.exportsFunction.comments); //have comments
         	assert.equal(metaInfo.exportsFunction.functionAssigned.name, "exportsFunction"); //have functionName
         	assert.deepEqual(metaInfo.exportsFunction.functionAssigned.args, ['arg21', 'arg22']); //arg names resolved
+        },
+        'should parse annotations' : function(metaInfo){
+                assert.isObject(metaInfo.exportsFunctionWithAnnotations.annotations); //is object
+                assert.isObject(metaInfo.exportsFunctionWithAnnotations.annotations.annotationTest); //is object
+                assert.deepEqual(metaInfo.exportsFunctionWithAnnotations.annotations.annotationTest, {arg:'value', arg2:'value2'}); //is object
         }
     }
 

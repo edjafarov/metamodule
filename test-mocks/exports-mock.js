@@ -18,3 +18,10 @@ module.exports.moduleExportsFunction = function moduleExportsFunction(arg11, arg
 exports.exportsFunction = function exportsFunction (arg21, arg22){
 	
 }
+
+/**
+* @annotationTest(arg='value', arg2='value2')
+*/
+exports.exportsFunctionWithAnnotations = function exportsFunctionWithAnnotations (arg31, arg32){
+	
+}
