@@ -12,4 +12,4 @@ $npm install metamodule
 
 look into tests
 
-
+[![Build Status](https://secure.travis-ci.org/edjafarov/metamodule.png)](http://travis-ci.org/edjafarov/metamodule)
